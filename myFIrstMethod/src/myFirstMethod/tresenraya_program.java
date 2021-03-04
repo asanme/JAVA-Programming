@@ -1,8 +1,11 @@
 package myFirstMethod;
 import java.util.Scanner;
+
+import edu.princeton.cs.introcs.Picture;
 import edu.princeton.cs.introcs.StdDraw;
 
 public class tresenraya_program {
+	private static boolean winner;
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		String[][] table;
@@ -18,8 +21,6 @@ public class tresenraya_program {
 		int x = 0;
 		int y = 0;
 		int count = 0;
-		
-		
 		
 		//GENEREM LA TAULA
 		table = createTable();
@@ -79,6 +80,7 @@ public class tresenraya_program {
 				if (!table[x][y].contains("O") && !table[x][y].contains("X")) {
 					table[x][y] = "X";
 					hasPrinted = true;
+					drawTable(table, fitxa);
 				} else {
 					System.out.println("Introdueix un eix que no estigui ocupat");
 					hasPrinted = false;
@@ -89,6 +91,7 @@ public class tresenraya_program {
 				if (!table[x][y].contains("X") && !table[x][y].contains("O")) {
 					table[x][y] = "O";
 					hasPrinted = true;
+					drawTable(table, fitxa);
 				} else {
 					System.out.println("Introdueix un eix que no estigui ocupat");
 					hasPrinted = false;
@@ -126,7 +129,7 @@ public class tresenraya_program {
 		}
 		
 	}
-
+	
 	public static String[][] createTable() {
 
 		String[][] table = new String[3][3];
@@ -137,6 +140,7 @@ public class tresenraya_program {
 			}
 		}
 		StdDraw.setPenRadius(0.01);
+
 		//lineas exteriores 
 		StdDraw.line(0,0,0,1);
 		StdDraw.line(0,1,1,1);
@@ -154,7 +158,6 @@ public class tresenraya_program {
 	}
 
 	public static void printTable(String[][] table) {
-
 		System.out.println("-------------");
 		System.out.println("| " + table[0][0] + " | " + table[0][1] + " | " + table[0][2] + " |");
 		System.out.println("-------------");
@@ -163,12 +166,124 @@ public class tresenraya_program {
 		System.out.println("| " + table[2][0] + " | " + table[2][1] + " | " + table[2][2] + " |");
 		System.out.println("-------------");
 	}
+	
+	public static void drawTable(String[][] table, String fitxa) {
+		double squareSize = 0.0825;
+		double bigSquareSize = 0.33333333333333333333333333333333333333333333; //PERIÒDIC PER TAL QUE APAREGUI COM CAL
+		double initialSquare = 0;
+		for(int i = 0; i < table.length; i++) {
+			for(int j = 0; j < table[i].length; j++) {
+				if(table[i][j] == fitxa) {
+					//0 0 
+					if(i == 0 && j == 0) {
+						if(fitxa == "X") {
+							StdDraw.setPenRadius(0.01);
+							StdDraw.line(0,1,0.33,0.66);
+							StdDraw.line(0,0.66,0.33,1);
+						} else {
+							StdDraw.setPenRadius(0.1);
+							StdDraw.point(2*squareSize, 10*squareSize);
+						}
+					}
+					//0 1
+					else if(i == 0 && j == 1) {
+						if(fitxa == "X") {
+							StdDraw.setPenRadius(0.01);
+							StdDraw.line(0+bigSquareSize,1,0.33+bigSquareSize,0.66);
+							StdDraw.line(0+bigSquareSize,0.66,0.33+bigSquareSize,1);
+						} else {
+							StdDraw.setPenRadius(0.1);
+							StdDraw.point(6*squareSize, 10*squareSize);
+						}
+					}
+					//0 2
+					else if(i == 0 && j == 2) {
+						if(fitxa == "X") {
+							StdDraw.setPenRadius(0.01);
+							StdDraw.line(0+bigSquareSize*2,1,0.33+bigSquareSize*2,0.66);
+							StdDraw.line(0+bigSquareSize*2,0.66,0.33+bigSquareSize*2,1);
+						} else {
+							StdDraw.setPenRadius(0.1);
+							StdDraw.point(10*squareSize, 10*squareSize);
+						}
+					}
+					//1 0
+					else if(i == 1 && j == 0) {
+						if(fitxa == "X") {
+							StdDraw.setPenRadius(0.01);
+							StdDraw.line(0,0.66,0.33,0.33);
+							StdDraw.line(0.33,0.66,0,0.33);
+						} else {
+							StdDraw.setPenRadius(0.1);
+							StdDraw.point(2*squareSize, 6*squareSize);
+						}
+					}
+					//1 1
+
+					else if(i == 1 && j == 1) {
+						if(fitxa == "X") {
+							StdDraw.setPenRadius(0.01);
+							StdDraw.line(0+bigSquareSize,0.66,0.33+bigSquareSize,0.33);
+							StdDraw.line(0.33+bigSquareSize,0.66,0+bigSquareSize,0.33);
+						} else {
+							StdDraw.setPenRadius(0.1);
+							StdDraw.point(6*squareSize, 6*squareSize);
+						}
+					}
+					//1 2
+					else if(i == 1 && j == 2) {
+						if(fitxa == "X") {
+							StdDraw.setPenRadius(0.01);
+							StdDraw.line(0+bigSquareSize*2,0.66,0.33+bigSquareSize*2,0.33);
+							StdDraw.line(0.33+bigSquareSize*2,0.66,0+bigSquareSize*2,0.33);
+						} else {
+							StdDraw.setPenRadius(0.1);
+							StdDraw.point(10*squareSize, 6*squareSize);
+						}
+					}
+					//2 0 
+					else if(i == 2 && j == 0) {
+						if(fitxa == "X") {
+							StdDraw.setPenRadius(0.01);
+							StdDraw.line(0,0.33,0.33,0);
+							StdDraw.line(0.33,0.33,0,0);
+						} else {
+							StdDraw.setPenRadius(0.1);
+							StdDraw.point(2*squareSize, 10*squareSize);
+						}
+					}
+					//2 1
+					else if(i == 2 && j == 1) {
+						if(fitxa == "X") {
+							StdDraw.setPenRadius(0.01);
+							StdDraw.line(0+bigSquareSize,0.33,0.33+bigSquareSize,0);
+							StdDraw.line(0.33+bigSquareSize,0.33,0+bigSquareSize,0);
+						} else {
+							StdDraw.setPenRadius(0.1);
+							StdDraw.point(2*squareSize, 10*squareSize);
+						}
+					}
+					//2 2
+					else if(i == 2 && j == 2) {
+						if(fitxa == "X") {
+							StdDraw.setPenRadius(0.01);
+							StdDraw.line(0+bigSquareSize*2,0.33,0.33+bigSquareSize*2,0);
+							StdDraw.line(0.33+bigSquareSize*2,0.33,0+bigSquareSize*2,0);
+						} else {
+							StdDraw.setPenRadius(0.1);
+							StdDraw.point(2*squareSize, 10*squareSize);
+						}
+					}
+				}
+			}
+		}
+	}
 
 	//WINNER CASES
 	public static boolean checkWinner(String[][] table, String fitxa, int count) {
 		String winnerPlayer = "";
 		boolean hasFinished = false;
-		boolean winner = false;
+		winner = false;
 		// HORIZONTAL
 		if (table[0][0].contains(fitxa) && table[0][1].equals(fitxa) && table[0][2].contains(fitxa)) {
 			winner = true;
@@ -217,6 +332,7 @@ public class tresenraya_program {
 		boolean hasFinished = true;
 		if (w) {
 			System.out.print("El guanyador ha sigut el jugador " + wPlayer);
+			StdDraw.picture(0.5, 0.5, "hqdefault.jpg");
 		} else {
 			System.out.println("Empat");
 		}
